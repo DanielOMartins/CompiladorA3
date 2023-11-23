@@ -1,4 +1,4 @@
-// Generated from C:/Users/danie/Documents/A3_Computacao_Grafica/CompiladorA3/src/main/antlr4/Grammar.g4 by ANTLR 4.13.1
+// Generated from C:/Users/daniel.o.martins/Documents/Faculdade/src/main/antlr4/Grammar.g4 by ANTLR 4.13.1
 package gen;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -28,15 +28,15 @@ public interface GrammarListener extends ParseTreeListener {
 	 */
 	void exitStatement(GrammarParser.StatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GrammarParser#type}.
+	 * Enter a parse tree produced by {@link GrammarParser#var}.
 	 * @param ctx the parse tree
 	 */
-	void enterType(GrammarParser.TypeContext ctx);
+	void enterVar(GrammarParser.VarContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link GrammarParser#type}.
+	 * Exit a parse tree produced by {@link GrammarParser#var}.
 	 * @param ctx the parse tree
 	 */
-	void exitType(GrammarParser.TypeContext ctx);
+	void exitVar(GrammarParser.VarContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GrammarParser#statementEnd}.
 	 * @param ctx the parse tree
@@ -48,15 +48,15 @@ public interface GrammarListener extends ParseTreeListener {
 	 */
 	void exitStatementEnd(GrammarParser.StatementEndContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GrammarParser#variableDeclaration}.
+	 * Enter a parse tree produced by {@link GrammarParser#assignment}.
 	 * @param ctx the parse tree
 	 */
-	void enterVariableDeclaration(GrammarParser.VariableDeclarationContext ctx);
+	void enterAssignment(GrammarParser.AssignmentContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link GrammarParser#variableDeclaration}.
+	 * Exit a parse tree produced by {@link GrammarParser#assignment}.
 	 * @param ctx the parse tree
 	 */
-	void exitVariableDeclaration(GrammarParser.VariableDeclarationContext ctx);
+	void exitAssignment(GrammarParser.AssignmentContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GrammarParser#expression}.
 	 * @param ctx the parse tree
@@ -78,16 +78,6 @@ public interface GrammarListener extends ParseTreeListener {
 	 */
 	void exitCondition(GrammarParser.ConditionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GrammarParser#assignment}.
-	 * @param ctx the parse tree
-	 */
-	void enterAssignment(GrammarParser.AssignmentContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GrammarParser#assignment}.
-	 * @param ctx the parse tree
-	 */
-	void exitAssignment(GrammarParser.AssignmentContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link GrammarParser#printStatement}.
 	 * @param ctx the parse tree
 	 */
@@ -98,16 +88,6 @@ public interface GrammarListener extends ParseTreeListener {
 	 */
 	void exitPrintStatement(GrammarParser.PrintStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GrammarParser#writeStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterWriteStatement(GrammarParser.WriteStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GrammarParser#writeStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitWriteStatement(GrammarParser.WriteStatementContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link GrammarParser#ifStatement}.
 	 * @param ctx the parse tree
 	 */
@@ -117,24 +97,4 @@ public interface GrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIfStatement(GrammarParser.IfStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link GrammarParser#whileLoop}.
-	 * @param ctx the parse tree
-	 */
-	void enterWhileLoop(GrammarParser.WhileLoopContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GrammarParser#whileLoop}.
-	 * @param ctx the parse tree
-	 */
-	void exitWhileLoop(GrammarParser.WhileLoopContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link GrammarParser#doWhileLoop}.
-	 * @param ctx the parse tree
-	 */
-	void enterDoWhileLoop(GrammarParser.DoWhileLoopContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GrammarParser#doWhileLoop}.
-	 * @param ctx the parse tree
-	 */
-	void exitDoWhileLoop(GrammarParser.DoWhileLoopContext ctx);
 }

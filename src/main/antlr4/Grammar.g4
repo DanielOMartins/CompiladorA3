@@ -1,61 +1,55 @@
 grammar Grammar;
 //Lexer
-ID : [A-Z_][a-z]*;
+TYPE : 'int' | 'float' | 'String';
+ID : [a-z][A-Z_]*;
 INT : [0-9]+;
 FLOAT : [0-9]+ '.' [0-9]+ | '.' [0-9]+ | [0-9]+ '.';
 STRING : '"' .*? '"';
 PLUS : '+';
-EQUALS : '=';
+ASSING : '=';
+EQUALS : '==';
 IF : 'if';
 ELSE : 'else';
-WHILE : 'while';
-DO : 'do';
+//WHILE : 'while';
+//DO : 'do';
 SEMICOLON : ';';
-LPAREN : '(';
-RPAREN : ')';
-LBRACE : '{';
-RBRACE : '}';
 NOTEQUAL : '!=';
 LT : '<';
 LTEQUAL : '<=';
 GT : '>';
 GTEQUAL : '>=';
 PRINT : 'print';
-WRITE : 'write';
+//WRITE : 'write';
 
+NEWLINE : [\r\n\n]+;
 WS : [ \t\r\n]+ -> skip;
 COMMENT : '/*' .*? '*/' -> skip;
 
 //Parser
-program : EOF | statement;
+program : (statement statementEnd)*;
 
-statement : variableDeclaration
-          | assignment
+statement : assignment
           | ifStatement
-          | whileLoop
-          | doWhileLoop
-          | writeStatement
           | printStatement
+          | expression
           ;
 
-type : INT | FLOAT | STRING;
+var : INT | FLOAT | STRING;
 
-statementEnd : SEMICOLON;
+statementEnd : SEMICOLON | NEWLINE;
 
-variableDeclaration : type ID statementEnd;
+assignment  : TYPE ID ASSING expression statementEnd;
 
-expression  : ID (PLUS ID)*;
+expression  : ID (PLUS ID)* | var (PLUS var)* | ID (PLUS var)* | var (PLUS ID)*;
 
 condition   : expression (EQUALS | NOTEQUAL | LT | LTEQUAL | GT | GTEQUAL) expression;
 
-assignment  : type ID EQUALS expression statementEnd;
+printStatement : PRINT '(' expression ')' statementEnd;
 
-printStatement : PRINT LPAREN expression RPAREN statementEnd;
+//writeStatement : WRITE '(' expression ')' statementEnd;
 
-writeStatement : WRITE LPAREN expression RPAREN statementEnd;
+ifStatement : IF '(' condition ')' '{' statement+ '}' (ELSE '{' statement+ '}')?;
 
-ifStatement : IF LPAREN condition RPAREN LBRACE statement+ RBRACE (ELSE LBRACE statement+ RBRACE)? statementEnd;
+//whileLoop   : WHILE '(' condition ')' statement statementEnd;
 
-whileLoop   : WHILE LPAREN condition RPAREN statement statementEnd;
-
-doWhileLoop : DO statement WHILE LPAREN condition RPAREN statementEnd;
+//doWhileLoop : DO statement WHILE '(' condition ')' statementEnd;
