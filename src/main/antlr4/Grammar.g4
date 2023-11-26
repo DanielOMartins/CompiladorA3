@@ -40,7 +40,7 @@ statementEnd : SEMICOLON | NEWLINE;
 
 assignment  : TYPE ID ASSING expression statementEnd;
 
-expression  : ID (PLUS ID)* | var (PLUS var)* | ID (PLUS var)* | var (PLUS ID)*;
+expression  : ID (PLUS ID)* | var (PLUS var)* | ID (PLUS var)* | var (PLUS ID)* | var;
 
 condition   : expression (EQUALS | NOTEQUAL | LT | LTEQUAL | GT | GTEQUAL) expression;
 

@@ -1,8 +1,11 @@
 import gen.GrammarParser;
 import gen.GrammarVisitor;
+import model.Variables;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 public class MyGrammarVisitor<T> extends AbstractParseTreeVisitor<T> implements GrammarVisitor<T> {
+
+    public Variables variables = new Variables();
     @Override
     public T visitProgram(GrammarParser.ProgramContext ctx) {
         ctx.statement().forEach(this::visitStatement);
@@ -32,8 +35,23 @@ public class MyGrammarVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 
     @Override
     public T visitAssignment(GrammarParser.AssignmentContext ctx) {
-        ctx.TYPE();
+        String type = ctx.TYPE().getText();
+        variables.addType(type);
+        variables.addVariable(ctx.ID().getText(), getValueFromExpression(ctx.expression().getText(), type));
         return null;
+    }
+    private Object getValueFromExpression(String value, String type){
+        if (type.equals("String")){
+            if(!value.contains("\"")){
+                throw new RuntimeException();
+            }
+            return value.replace("\"", "");
+        }
+
+        if (type.equals("int"))
+            return Integer.valueOf(value);
+
+        return Float.valueOf(value);
     }
 
     @Override

@@ -1,4 +1,4 @@
-String a = "10";
+String a = 10;
 int b = 10;
 if(a == b){10 + 10}
 float g = 2.1;
