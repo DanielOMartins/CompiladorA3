@@ -1,4 +1,4 @@
-// Generated from C:/Users/daniel.o.martins/Documents/Faculdade/src/main/antlr4/Grammar.g4 by ANTLR 4.13.1
+// Generated from C:/Users/danie/Documents/A3_Computacao_Grafica/CompiladorA3/src/main/antlr4/Grammar.g4 by ANTLR 4.13.1
 package gen;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -37,6 +37,16 @@ public interface GrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVar(GrammarParser.VarContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GrammarParser#compare}.
+	 * @param ctx the parse tree
+	 */
+	void enterCompare(GrammarParser.CompareContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammarParser#compare}.
+	 * @param ctx the parse tree
+	 */
+	void exitCompare(GrammarParser.CompareContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GrammarParser#statementEnd}.
 	 * @param ctx the parse tree

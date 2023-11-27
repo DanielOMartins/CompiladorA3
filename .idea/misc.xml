@@ -26,8 +26,8 @@
         <PerGrammarGenerationSettings>
           <option name="fileName" value="$PROJECT_DIR$/src/main/antlr4/Grammar.g4" />
           <option name="autoGen" value="true" />
-          <option name="outputDir" value="C:\Users\daniel.o.martins\Documents\Faculdade\src\main\java" />
-          <option name="libDir" value="C:\Users\daniel.o.martins\Documents\Faculdade\src\main\antlr4" />
+          <option name="outputDir" value="C:\Users\danie\Documents\A3_Computacao_Grafica\CompiladorA3\src\main\java" />
+          <option name="libDir" value="C:\Users\danie\Documents\A3_Computacao_Grafica\CompiladorA3\src\main\antlr4" />
           <option name="encoding" value="" />
           <option name="pkg" value="gen" />
           <option name="language" value="Java" />

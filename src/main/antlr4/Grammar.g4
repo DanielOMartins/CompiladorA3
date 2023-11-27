@@ -21,12 +21,12 @@ GTEQUAL : '>=';
 PRINT : 'print';
 //WRITE : 'write';
 
-NEWLINE : [\r\n\n]+;
+NEWLINE : [\r\n]+ -> skip;
 WS : [ \t\r\n]+ -> skip;
 COMMENT : '/*' .*? '*/' -> skip;
 
 //Parser
-program : (statement statementEnd)*;
+program : (statement)* EOF;
 
 statement : assignment
           | ifStatement
@@ -36,13 +36,15 @@ statement : assignment
 
 var : INT | FLOAT | STRING;
 
-statementEnd : SEMICOLON | NEWLINE;
+compare : EQUALS | NOTEQUAL | LT | LTEQUAL | GT | GTEQUAL;
+
+statementEnd : SEMICOLON;
 
 assignment  : TYPE ID ASSING expression statementEnd;
 
 expression  : ID (PLUS ID)* | var (PLUS var)* | ID (PLUS var)* | var (PLUS ID)* | var;
 
-condition   : expression (EQUALS | NOTEQUAL | LT | LTEQUAL | GT | GTEQUAL) expression;
+condition   : ID ( compare ) ID | var ( compare ) var;
 
 printStatement : PRINT '(' expression ')' statementEnd;
 
