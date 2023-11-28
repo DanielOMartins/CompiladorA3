@@ -3,6 +3,7 @@ import gen.GrammarParser;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class Compiler extends BaseErrorListener {
@@ -18,25 +19,13 @@ public class Compiler extends BaseErrorListener {
         parser.removeErrorListeners();
         parser.addErrorListener(new MyErrorListener());
 
-
-        // Start the parsing process
         GrammarParser.ProgramContext tree = parser.program();// 'program' is the top-level rule
 
         MyGrammarVisitor myGrammarVisitor = new MyGrammarVisitor();
-        myGrammarVisitor.visitProgram(tree);
-
-        //Arrays.stream(parser.getRuleNames()).forEach(System.out::println);
-
-
-        // Optionally, print the parse tree for debugging
+        MyGrammarToJava myGrammarToJava = new MyGrammarToJava();
+        myGrammarToJava.visitProgram(tree);
+        //myGrammarVisitor.visitProgram(tree);
         System.out.println(tree.toStringTree(parser));
-        //System.out.println(tokens.getTokens());
-
-        // Perform additional processing, such as semantic analysis and code generation
-        // ...
-
-        // Optionally, generate and execute the code
-        // ...
 
         System.out.println("Compilation successful");
     }

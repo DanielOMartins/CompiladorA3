@@ -1,5 +1,6 @@
 package model;
 
+import Utils.Utils;
 import gen.GrammarParser;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
@@ -8,13 +9,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static Utils.Utils.replaceStringValue;
+
 public class WrittenVariables {
     private Map<String, String> writtenTypes = new HashMap<>();
 
     private List<String> allowedStringCompares = Arrays.asList("==", "!=");
 
     public String getWrittenType(String key){
-        return writtenTypes.get(key);
+        return writtenTypes.getOrDefault(key, "");
     }
 
     public void addWrittenType(String key, String type) {
@@ -24,8 +27,8 @@ public class WrittenVariables {
     public String findWrittenType(GrammarParser.VarContext ctx) {
         if (ctx.INT() != null)
             return "int";
-        if (ctx.FLOAT() != null)
-            return "float";
+        if (ctx.DOUBLE() != null)
+            return "double";
         if (ctx.STRING() != null)
             return "String";
         return "";
@@ -38,13 +41,13 @@ public class WrittenVariables {
             compareWithString(ctx.var(), compare, result);
         if (compareTypes.get(0).equals("int"))
             compareWithInt(ctx.var(), compare, result );
-        if (compareTypes.get(0).equals("float"))
-            compareWithFloat(ctx.var(), compare, result);
+        if (compareTypes.get(0).equals("double"))
+            compareWithDouble(ctx.var(), compare, result);
     }
 
-    private void compareWithFloat(List<GrammarParser.VarContext> id, String compare, Result result) {
-        float firstValue = Float.parseFloat(replaceStringValue(id.get(0)));
-        float secondValue = Float.parseFloat(replaceStringValue(id.get(1)));
+    private void compareWithDouble(List<GrammarParser.VarContext> id, String compare, Result result) {
+        double firstValue = Double.parseDouble(replaceStringValue(id.get(0)));
+        double secondValue = Double.parseDouble(replaceStringValue(id.get(1)));
 
         if (compare.equals("==")) {
             result.setIfCondition(firstValue == secondValue);
@@ -103,7 +106,7 @@ public class WrittenVariables {
             result.setIfCondition(!firstValue.equals(secondValue));
     }
 
-    private List<String> shouldCompare(List<GrammarParser.VarContext> id) {
+    public List<String> shouldCompare(List<GrammarParser.VarContext> id) {
         String firstType = getWrittenType(replaceStringValue(id.get(0)));
         String secondType = getWrittenType(replaceStringValue(id.get(1)));
 
@@ -113,7 +116,5 @@ public class WrittenVariables {
         return Arrays.asList(firstType, secondType);
     }
 
-    private String replaceStringValue(GrammarParser.VarContext var){
-        return var.getText().replace("\"", "");
-    }
+
 }

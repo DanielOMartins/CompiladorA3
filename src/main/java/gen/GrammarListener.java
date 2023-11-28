@@ -38,6 +38,16 @@ public interface GrammarListener extends ParseTreeListener {
 	 */
 	void exitVar(GrammarParser.VarContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link GrammarParser#operators}.
+	 * @param ctx the parse tree
+	 */
+	void enterOperators(GrammarParser.OperatorsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammarParser#operators}.
+	 * @param ctx the parse tree
+	 */
+	void exitOperators(GrammarParser.OperatorsContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link GrammarParser#compare}.
 	 * @param ctx the parse tree
 	 */
@@ -47,6 +57,26 @@ public interface GrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCompare(GrammarParser.CompareContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GrammarParser#ifBlock}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfBlock(GrammarParser.IfBlockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammarParser#ifBlock}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfBlock(GrammarParser.IfBlockContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GrammarParser#elseBlock}.
+	 * @param ctx the parse tree
+	 */
+	void enterElseBlock(GrammarParser.ElseBlockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammarParser#elseBlock}.
+	 * @param ctx the parse tree
+	 */
+	void exitElseBlock(GrammarParser.ElseBlockContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GrammarParser#statementEnd}.
 	 * @param ctx the parse tree
@@ -67,6 +97,16 @@ public interface GrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAssignment(GrammarParser.AssignmentContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GrammarParser#variableAssignment}.
+	 * @param ctx the parse tree
+	 */
+	void enterVariableAssignment(GrammarParser.VariableAssignmentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammarParser#variableAssignment}.
+	 * @param ctx the parse tree
+	 */
+	void exitVariableAssignment(GrammarParser.VariableAssignmentContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GrammarParser#expression}.
 	 * @param ctx the parse tree
@@ -98,6 +138,16 @@ public interface GrammarListener extends ParseTreeListener {
 	 */
 	void exitPrintStatement(GrammarParser.PrintStatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link GrammarParser#writeStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterWriteStatement(GrammarParser.WriteStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammarParser#writeStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitWriteStatement(GrammarParser.WriteStatementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link GrammarParser#ifStatement}.
 	 * @param ctx the parse tree
 	 */
@@ -107,4 +157,24 @@ public interface GrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIfStatement(GrammarParser.IfStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GrammarParser#whileLoop}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhileLoop(GrammarParser.WhileLoopContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammarParser#whileLoop}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhileLoop(GrammarParser.WhileLoopContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GrammarParser#doWhileLoop}.
+	 * @param ctx the parse tree
+	 */
+	void enterDoWhileLoop(GrammarParser.DoWhileLoopContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammarParser#doWhileLoop}.
+	 * @param ctx the parse tree
+	 */
+	void exitDoWhileLoop(GrammarParser.DoWhileLoopContext ctx);
 }

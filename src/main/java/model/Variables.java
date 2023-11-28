@@ -32,24 +32,6 @@ public class Variables {
         this.variables.put(key, value);
     }
 
-    public Object getValueFromExpression(String value, String type, int line) {
-        if (type.equals("String")){
-            if(!value.contains("\"")){
-                throw new RuntimeException("Syntax error at line " + line + ", " + type + " can not recieve this value: " + value);
-            }
-            return value.replace("\"", "");
-        }
-
-        if (type.equals("float")){
-            if (!value.contains(".")){
-                throw new RuntimeException("Syntax error at line " + line + ", " + type + " can not recieve this value: " + value);
-            }
-            return Float.valueOf(value);
-        }
-
-        return Integer.valueOf(value);
-    }
-
     public void compareVariables(GrammarParser.ConditionContext ctx, String compare, Result result) {
         List<String> compareTypes = shouldCompare(ctx.ID());
 
@@ -57,13 +39,13 @@ public class Variables {
             compareWithString(ctx.ID(), compare, result);
         if (compareTypes.get(0).equals("int"))
             compareWithInt(ctx.ID(), compare, result );
-        if (compareTypes.get(0).equals("float"))
-            compareWithFloat(ctx.ID(), compare, result);
+        if (compareTypes.get(0).equals("double"))
+            compareWithDouble(ctx.ID(), compare, result);
     }
 
-    private void compareWithFloat(List<TerminalNode> id, String compare, Result result) {
-        float firstValue = (Float) getVariable(id.get(0).getText());
-        float secondValue = (Float) getVariable(id.get(1).getText());
+    private void compareWithDouble(List<TerminalNode> id, String compare, Result result) {
+        double firstValue = (Double) getVariable(id.get(0).getText());
+        double secondValue = (Double) getVariable(id.get(1).getText());
 
         if (compare.equals("==")) {
             result.setIfCondition(firstValue == secondValue);
@@ -122,7 +104,7 @@ public class Variables {
             result.setIfCondition(!firstValue.equals(secondValue));
     }
 
-    private List<String> shouldCompare(List<TerminalNode> id) {
+    public List<String> shouldCompare(List<TerminalNode> id) {
         String firstType = getType(id.get(0).getText());
         String secondType = getType(id.get(1).getText());
 
@@ -130,5 +112,32 @@ public class Variables {
             throw new RuntimeException("Is not possible to compare " + firstType + " and " + secondType);
 
         return Arrays.asList(firstType, secondType);
+    }
+
+    public List<String> shouldStatement(List<TerminalNode> id) {
+        String firstType = getType(id.get(0).getText());
+        String secondType = getType(id.get(1).getText());
+
+        if (!firstType.equals(secondType))
+            throw new RuntimeException("Is not possible to realize operation with " + firstType + " and " + secondType);
+
+        return Arrays.asList(firstType, secondType);
+    }
+
+    public void verifyDoesExist(String varName) {
+        if (getVariables().containsKey(varName))
+            throw new RuntimeException("Variable " + varName + " is already declared.");
+    }
+
+    public void verifyDoesNotExist(String varName) {
+        if (!getVariables().containsKey(varName))
+            throw new RuntimeException("Variable " + varName + " has not been declared yet.");
+    }
+
+    public Object getExistentVariable(String varName) {
+        if (getVariables().containsKey(varName))
+            return getVariable(varName);
+        else
+            throw new RuntimeException("Variable has not been declared yet.");
     }
 }
