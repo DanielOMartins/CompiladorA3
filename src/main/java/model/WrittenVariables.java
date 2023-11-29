@@ -98,7 +98,7 @@ public class WrittenVariables {
         String secondValue =  replaceStringValue(id.get(1));
 
         if (!allowedStringCompares.contains(compare))
-            throw new RuntimeException("Is only possible to compare String with '==' or '!='");
+            throw new RuntimeException("Syntax error at line " + id.get(0).getStart().getLine() + ". Is only possible to compare String with '==' or '!='");
 
         if (compare.equals("=="))
             result.setIfCondition(firstValue.equals(secondValue));
@@ -111,7 +111,7 @@ public class WrittenVariables {
         String secondType = getWrittenType(replaceStringValue(id.get(1)));
 
         if (!firstType.equals(secondType))
-            throw new RuntimeException("Is not possible to compare " + firstType + " and " + secondType);
+            throw new RuntimeException("Syntax error at line " + id.get(0).getStart().getLine() + ". Is not possible to compare " + firstType + " and " + secondType);
 
         return Arrays.asList(firstType, secondType);
     }

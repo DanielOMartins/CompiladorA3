@@ -21,7 +21,7 @@ public class Compiler extends BaseErrorListener {
 
         GrammarParser.ProgramContext tree = parser.program();// 'program' is the top-level rule
 
-        MyGrammarVisitor myGrammarVisitor = new MyGrammarVisitor();
+        //MyGrammarVisitor myGrammarVisitor = new MyGrammarVisitor();
         MyGrammarToJava myGrammarToJava = new MyGrammarToJava();
         myGrammarToJava.visitProgram(tree);
         //myGrammarVisitor.visitProgram(tree);

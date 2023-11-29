@@ -98,8 +98,9 @@ public class MyGrammarToJava extends AbstractParseTreeVisitor<Result> implements
     public Result visitAssignment(GrammarParser.AssignmentContext ctx) throws IOException {
         String type = ctx.TYPE().getText();
         String varName = ctx.ID().getText();
-        variables.verifyDoesExist(varName);
+        variables.verifyDoesExist(varName, ctx.getStart().getLine());
         visitExpression(ctx.expression());
+        variables.verifyExpression(type, ctx.expression().var(), writtenVariables);
         variables.addType(varName, type);
         variables.addVariable(varName, result.getExpressionResult());
         outputJava.declareVariable(variables, varName, ctx.expression());
@@ -109,7 +110,7 @@ public class MyGrammarToJava extends AbstractParseTreeVisitor<Result> implements
     @Override
     public Result visitVariableAssignment(GrammarParser.VariableAssignmentContext ctx) throws IOException {
         visitExpression(ctx.expression());
-        variables.verifyDoesNotExist(ctx.ID().getText());
+        variables.verifyDoesNotExist(ctx.ID().getText(), ctx.getStart().getLine());
         variables.addVariable(ctx.ID().getText(), result.getExpressionResult());
         outputJava.updateVariable(ctx.ID().getText(), ctx.expression());
         return null;
@@ -122,10 +123,8 @@ public class MyGrammarToJava extends AbstractParseTreeVisitor<Result> implements
             visitOperators(ctx.operators().get(0));
             if (!ctx.var().isEmpty()){
                 result.getValueFromExpression(ctx.var(), writtenVariables);
-                result.setVar(true);
             }else {
-                result.getValueFromExpression(ctx.ID(), variables);
-                result.setVar(false);
+                result.getValueFromExpression(ctx.ID(), variables, ctx.getStart().getLine());
             }
         } else {
             result.getValueFromExpression(ctx, ctx.getStart().getLine(), writtenVariables, variables);
@@ -158,7 +157,7 @@ public class MyGrammarToJava extends AbstractParseTreeVisitor<Result> implements
 
     @Override
     public Result visitWriteStatement(GrammarParser.WriteStatementContext ctx) throws IOException {
-        variables.verifyDoesExist(ctx.ID().getText());
+        variables.verifyDoesExist(ctx.ID().getText(), ctx.getStart().getLine());
         outputJava.receiveScan(ctx, ctx.TYPE().getText());
         return null;
     }

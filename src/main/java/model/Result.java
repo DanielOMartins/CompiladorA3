@@ -105,9 +105,9 @@ public class Result {
             calculateDouble(values, getExpressionOperator(), this, 0);
     }
 
-    public void getValueFromExpression(List<TerminalNode> id, Variables variables) {
-        variables.shouldStatement(id);
-        List<Object> values = Arrays.asList(variables.getExistentVariable(id.get(0).getText()), variables.getExistentVariable(id.get(1).getText()));
+    public void getValueFromExpression(List<TerminalNode> id, Variables variables, int line) {
+        variables.shouldStatement(id, line);
+        List<Object> values = Arrays.asList(variables.getExistentVariable(id.get(0).getText(), line), variables.getExistentVariable(id.get(1).getText(), line));
 
         if (variables.getType(id.get(0).getText()).equals("String"))
             calculateString(values, getExpressionOperator(), this);
@@ -116,6 +116,4 @@ public class Result {
         if (variables.getType(id.get(0).getText()).equals("double"))
             calculateDouble(values, getExpressionOperator(), this);
     }
-
-
 }

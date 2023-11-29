@@ -36,14 +36,14 @@ public class Variables {
         List<String> compareTypes = shouldCompare(ctx.ID());
 
         if (compareTypes.get(0).equals("String"))
-            compareWithString(ctx.ID(), compare, result);
+            compareWithString(ctx.ID(), compare, result, ctx.getStart().getLine());
         if (compareTypes.get(0).equals("int"))
-            compareWithInt(ctx.ID(), compare, result );
+            compareWithInt(ctx.ID(), compare, result, ctx.getStart().getLine());
         if (compareTypes.get(0).equals("double"))
-            compareWithDouble(ctx.ID(), compare, result);
+            compareWithDouble(ctx.ID(), compare, result, ctx.getStart().getLine());
     }
 
-    private void compareWithDouble(List<TerminalNode> id, String compare, Result result) {
+    private void compareWithDouble(List<TerminalNode> id, String compare, Result result, int line) {
         double firstValue = (Double) getVariable(id.get(0).getText());
         double secondValue = (Double) getVariable(id.get(1).getText());
 
@@ -67,7 +67,7 @@ public class Variables {
         }
     }
 
-    private void compareWithInt(List<TerminalNode> id, String compare, Result result) {
+    private void compareWithInt(List<TerminalNode> id, String compare, Result result, int line) {
         int firstValue = (Integer) getVariable(id.get(0).getText());
         int secondValue = (Integer) getVariable(id.get(1).getText());
 
@@ -91,12 +91,12 @@ public class Variables {
         }
     }
 
-    private void compareWithString(List<TerminalNode> id, String compare, Result result) {
+    private void compareWithString(List<TerminalNode> id, String compare, Result result, int line) {
         String firstValue = (String) getVariable(id.get(0).getText());
         String secondValue = (String) getVariable(id.get(1).getText());
 
         if (!allowedStringCompares.contains(compare))
-            throw new RuntimeException("Is only possible to compare String with '==' or '!='");
+            throw new RuntimeException("Syntax error at line " + line + ". Is only possible to compare String with '==' or '!='");
 
         if (compare.equals("=="))
             result.setIfCondition(firstValue.equals(secondValue));
@@ -114,30 +114,39 @@ public class Variables {
         return Arrays.asList(firstType, secondType);
     }
 
-    public List<String> shouldStatement(List<TerminalNode> id) {
+    public List<String> shouldStatement(List<TerminalNode> id, int line) {
         String firstType = getType(id.get(0).getText());
         String secondType = getType(id.get(1).getText());
 
         if (!firstType.equals(secondType))
-            throw new RuntimeException("Is not possible to realize operation with " + firstType + " and " + secondType);
+            throw new RuntimeException("Syntax error at line " + line + ". Is not possible to realize operation with " + firstType + " and " + secondType);
 
         return Arrays.asList(firstType, secondType);
     }
 
-    public void verifyDoesExist(String varName) {
+    public void verifyDoesExist(String varName, int line) {
         if (getVariables().containsKey(varName))
-            throw new RuntimeException("Variable " + varName + " is already declared.");
+            throw new RuntimeException("Syntax error at line " + line + ". Variable " + varName + " is already declared.");
     }
 
-    public void verifyDoesNotExist(String varName) {
+    public void verifyDoesNotExist(String varName, int line) {
         if (!getVariables().containsKey(varName))
-            throw new RuntimeException("Variable " + varName + " has not been declared yet.");
+            throw new RuntimeException("Syntax error at line " + line + ". Variable " + varName + " has not been declared yet.");
     }
 
-    public Object getExistentVariable(String varName) {
+    public Object getExistentVariable(String varName, int line) {
         if (getVariables().containsKey(varName))
             return getVariable(varName);
         else
-            throw new RuntimeException("Variable has not been declared yet.");
+            throw new RuntimeException("Syntax error at line " + line + ". Variable has not been declared yet.");
+    }
+
+    public void verifyExpression(String type, List<GrammarParser.VarContext> var, WrittenVariables writtenVariables) {
+        if (!var.isEmpty()){
+            String varType = writtenVariables.findWrittenType(var.get(0));
+
+            if (!type.equals(varType))
+                throw new RuntimeException("Syntax error at line " + var.get(0).getStart().getLine() + ". Is not possible to realize assignment to " + type + " with " + varType);
+        }
     }
 }

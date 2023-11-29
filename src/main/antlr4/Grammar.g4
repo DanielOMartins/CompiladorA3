@@ -57,7 +57,7 @@ assignment  : TYPE ID ASSING expression statementEnd;
 
 variableAssignment  : ID ASSING expression statementEnd;
 
-expression  : ID (operators ID)* | var (operators var)* | var | ID;
+expression  : ID (operators ID)* | var (operators var)* | var | ID ;
 
 condition   : ID ( compare ) ID | var ( compare ) var;
 
