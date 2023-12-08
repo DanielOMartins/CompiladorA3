@@ -213,25 +213,32 @@ public class MyGrammarToJava extends AbstractParseTreeVisitor<Result> implements
     @Override
     public Result visitCaculatorStatement(GrammarParser.CaculatorStatementContext ctx) {
         java.util.Scanner scanner = new java.util.Scanner(System.in);
+        String exit = "";
 
         System.out.println("Calculator, please follow the next steps!!");
+        do {
 
-        System.out.println("Write the first value: ");
-        double var1 = scanner.nextDouble();
+            System.out.println("Write the first value: ");
+            double var1 = scanner.nextDouble();
 
-        System.out.println("\nWrite the desired operator ('+', '-', '*', '/'): ");
-        String operator = scanner.next();
+            System.out.println("\nWrite the desired operator ('+', '-', '*', '/'): ");
+            String operator = scanner.next();
 
-        System.out.println("\nWrite the second value: ");
-        double var2 = scanner.nextDouble();
+            System.out.println("\nWrite the second value: ");
+            double var2 = scanner.nextDouble();
 
-        if (!Arrays.asList("+", "-", "*", "/").contains(operator)){
-            throw new RuntimeException("Only the following operators are allowed: '+', '-', '*', '/' ");
-        }
+            if (!Arrays.asList("+", "-", "*", "/").contains(operator)){
+                throw new RuntimeException("Only the following operators are allowed: '+', '-', '*', '/' ");
+            }
 
-        Utils.calculateDouble(Arrays.asList(var1, var2), operator, result);
+            Utils.calculateDouble(Arrays.asList(var1, var2), operator, result);
 
-        System.out.println("\n\nResult: " + result.getExpressionResult());
+            System.out.println("\n\nResult: " + result.getExpressionResult());
+
+            System.out.println("Do you want to continue? (y/n)");
+            exit = scanner.next();
+            System.out.println("\n======================================\n");
+        } while (!exit.equals("n"));
 
         scanner.close();
         return null;
