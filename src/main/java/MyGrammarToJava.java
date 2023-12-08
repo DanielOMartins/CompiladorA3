@@ -1,3 +1,4 @@
+import Utils.Utils;
 import gen.GrammarParser;
 import gen.GrammarVisitor;
 import model.OutputJava;
@@ -7,6 +8,8 @@ import model.WrittenVariables;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class MyGrammarToJava extends AbstractParseTreeVisitor<Result> implements GrammarVisitor<Result> {
     public Variables variables = new Variables();
@@ -49,6 +52,8 @@ public class MyGrammarToJava extends AbstractParseTreeVisitor<Result> implements
                 return visitWhileLoop(ctx.whileLoop());
             } else if (ctx.doWhileLoop() != null) {
                 return visitDoWhileLoop(ctx.doWhileLoop());
+            } else if (ctx.caculatorStatement() != null) {
+                return visitCaculatorStatement(ctx.caculatorStatement());
             }
         }catch (IOException e){
             e.printStackTrace();
@@ -151,7 +156,6 @@ public class MyGrammarToJava extends AbstractParseTreeVisitor<Result> implements
     public Result visitPrintStatement(GrammarParser.PrintStatementContext ctx) throws IOException {
         visitExpression(ctx.expression());
         outputJava.print(ctx.expression());
-        //System.out.println(String.valueOf(result.getExpressionResult()).replace("\"", ""));
         return null;
     }
 
@@ -203,6 +207,33 @@ public class MyGrammarToJava extends AbstractParseTreeVisitor<Result> implements
         visitCondition(ctx.condition());
         outputJava.subtractTab();
         outputJava.closeDoWhileLoop(ctx);
+        return null;
+    }
+
+    @Override
+    public Result visitCaculatorStatement(GrammarParser.CaculatorStatementContext ctx) {
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+
+        System.out.println("Calculator, please follow the next steps!!");
+
+        System.out.println("Write the first value: ");
+        double var1 = scanner.nextDouble();
+
+        System.out.println("\nWrite the desired operator ('+', '-', '*', '/'): ");
+        String operator = scanner.next();
+
+        System.out.println("\nWrite the second value: ");
+        double var2 = scanner.nextDouble();
+
+        if (!Arrays.asList("+", "-", "*", "/").contains(operator)){
+            throw new RuntimeException("Only the following operators are allowed: '+', '-', '*', '/' ");
+        }
+
+        Utils.calculateDouble(Arrays.asList(var1, var2), operator, result);
+
+        System.out.println("\n\nResult: " + result.getExpressionResult());
+
+        scanner.close();
         return null;
     }
 }

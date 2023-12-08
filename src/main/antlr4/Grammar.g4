@@ -1,7 +1,6 @@
 grammar Grammar;
 //Lexer
 TYPE : 'int' | 'double' | 'String';
-ID : [a-z][A-Z_]*;
 INT : [0-9]+;
 DOUBLE : [0-9]+ '.' [0-9]+ | '.' [0-9]+ | [0-9]+ '.';
 STRING : '"' .*? '"';
@@ -23,6 +22,8 @@ GT : '>';
 GTEQUAL : '>=';
 PRINT : 'print';
 WRITE : 'write';
+CALCULATOR : 'calculator';
+ID : [a-z][A-Z_]* | [a-z]+ | [a-zA-Z_]+;
 
 NEWLINE : [\r\n]+ -> skip;
 WS : [ \t\r\n]+ -> skip;
@@ -39,6 +40,7 @@ statement : assignment
           | expression
           | whileLoop
           | doWhileLoop
+          | caculatorStatement
           ;
 
 var : INT | DOUBLE | STRING;
@@ -70,3 +72,5 @@ ifStatement : ifBlock elseBlock;
 whileLoop   : WHILE '(' condition ')' '{' statement+ '}';
 
 doWhileLoop : DO '{' statement+ '}' WHILE '(' condition ')' statementEnd;
+
+caculatorStatement : CALCULATOR '(' ')' statementEnd;

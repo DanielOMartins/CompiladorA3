@@ -44,7 +44,7 @@ public class Utils {
         if (expressionOperator.equals("*"))
             result.setExpressionResult((Double)(values.get(0)) * (Double)(values.get(1)));
         if (expressionOperator.equals("/")){
-            if (values.get(1).equals("0"))
+            if (values.get(1).equals("0.0") || (double) values.get(1) == 0)
                 throw new RuntimeException("Is not possible to divide by 0");
             else
                 result.setExpressionResult((Double)(values.get(0)) / (Double)(values.get(1)));

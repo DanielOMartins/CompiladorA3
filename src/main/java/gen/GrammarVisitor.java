@@ -1,4 +1,4 @@
-// Generated from C:/Users/danie/Documents/A3_Computacao_Grafica/CompiladorA3/src/main/antlr4/Grammar.g4 by ANTLR 4.13.1
+// Generated from C:/Users/daniel.o.martins/Documents/Faculdade/src/main/antlr4/Grammar.g4 by ANTLR 4.13.1
 package gen;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -114,4 +114,10 @@ public interface GrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitDoWhileLoop(GrammarParser.DoWhileLoopContext ctx) throws IOException;
+	/**
+	 * Visit a parse tree produced by {@link GrammarParser#caculatorStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCaculatorStatement(GrammarParser.CaculatorStatementContext ctx);
 }
