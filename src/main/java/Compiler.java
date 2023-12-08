@@ -19,13 +19,10 @@ public class Compiler extends BaseErrorListener {
         parser.removeErrorListeners();
         parser.addErrorListener(new MyErrorListener());
 
-        GrammarParser.ProgramContext tree = parser.program();// 'program' is the top-level rule
-
-        //MyGrammarVisitor myGrammarVisitor = new MyGrammarVisitor();
+        GrammarParser.ProgramContext tree = parser.program();
         MyGrammarToJava myGrammarToJava = new MyGrammarToJava();
         myGrammarToJava.visitProgram(tree);
-        //myGrammarVisitor.visitProgram(tree);
-        System.out.println(tree.toStringTree(parser));
+        //System.out.println(tree.toStringTree(parser));
 
         System.out.println("Compilation successful");
     }
